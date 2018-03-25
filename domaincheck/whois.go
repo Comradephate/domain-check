@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+//Domain struct with domain stuff in it
 type Domain struct {
 	Expiry      string   `json:"expiry"`
 	Updated     string   `json:"updated"`
@@ -19,15 +20,16 @@ type Domain struct {
 	Status      string   `json:"status"`
 }
 
+//GetWhois is the main way to interface with this library, takes in a domain name and returns a Domain struct
 func GetWhois(domain string) (d Domain) {
 
-	whois, _ := GetRawWhois(domain, "whois.iana.org")
+	whois, _ := getRawWhois(domain, "whois.iana.org")
 
-	whois = ParseReferServer(whois)
+	whois = parseReferServer(whois)
 
-	rawdata, _ := GetRawWhois(domain, whois)
+	rawdata, _ := getRawWhois(domain, whois)
 
-	d = ParseWhoisData(rawdata)
+	d = parseWhoisData(rawdata)
 
 	return
 }
@@ -46,7 +48,7 @@ func ParseDomain(domain string) (tld string, err error) {
 	return
 }
 
-func GetRawWhois(domain string, server string) (result string, err error) {
+func getRawWhois(domain string, server string) (result string, err error) {
 	var connection net.Conn
 	var timeout time.Duration
 	var buffer []byte
@@ -76,13 +78,13 @@ func GetRawWhois(domain string, server string) (result string, err error) {
 
 }
 
-//ParseWhoisServer takes raw whois data, returns the whois server if one is found. Assumes exactly one result.
-func ParseReferServer(whois string) string {
+// takes raw whois data, returns the whois server if one is found. Assumes exactly one result.
+func parseReferServer(whois string) string {
 	return parser(regexp.MustCompile(`(?i)refer:\s+(.*?)(\s|$)`), 1, whois)[0]
 }
 
-// for parameters that we always expect exactly one response
-func ValidateDomainParam(data []string, param string, domain string) error {
+//for parameters that we always expect exactly one response
+func validateDomainParam(data []string, param string, domain string) error {
 	switch {
 	case len(data) == 0:
 		return errors.New(domain + " has no data for " + param)
@@ -103,27 +105,27 @@ var (
 )
 
 //Parse whois data and return a bunch of crap
-func ParseWhoisData(whois string) (d Domain) {
+func parseWhoisData(whois string) (d Domain) {
 
 	name := parser(nameRE, 1, whois)[0]
 
 	expiry := parser(expiryRE, 1, whois)
-	if ValidateDomainParam(expiry, "expiry", name) == nil {
+	if validateDomainParam(expiry, "expiry", name) == nil {
 		d.Expiry = expiry[0]
 	}
 	creation := parser(creationRE, 1, whois)
-	if ValidateDomainParam(creation, "creation", name) == nil {
+	if validateDomainParam(creation, "creation", name) == nil {
 		d.Creation = creation[0]
 	} else {
 		log.Printf("failed to assign creation time, value was %s\n", creation)
-		log.Println(ValidateDomainParam(creation, "creation", name))
+		log.Println(validateDomainParam(creation, "creation", name))
 	}
 	updated := parser(updatedRE, 2, whois)
-	if ValidateDomainParam(updated, "updated", name) == nil {
+	if validateDomainParam(updated, "updated", name) == nil {
 		d.Updated = updated[0]
 	}
 	status := parser(statusRE, 2, whois)
-	if ValidateDomainParam(status, "status", name) == nil {
+	if validateDomainParam(status, "status", name) == nil {
 		d.Status = status[0]
 	}
 	nameservers := parser(nameserversRE, 1, whois)
