@@ -7,14 +7,11 @@ import (
 	"time"
 
 	"github.com/Comradephate/domain-check/domaincheck"
-	"github.com/gorilla/mux"
 )
 
 func main() {
 	dc := domaincheck.DomainCheck{}
-	r := mux.NewRouter()
-	r.HandleFunc("/", dc.HomeHandler)
-	r.HandleFunc("/whois", dc.WhoisHandler) //.Methods("POST")
+	r := dc.NewRouter
 
 	srv := &http.Server{
 		Handler:      r,
@@ -23,9 +20,7 @@ func main() {
 		ReadTimeout:  15 * time.Second,
 	}
 
-	logger := log.New(os.Stdout, "bad: ", log.LstdFlags)
-	logger.Println("Doing the thing")
-	//log.SetOutput(os.Stdout)
+	logger := log.New(os.Stdout, "api: ", log.LstdFlags)
 
 	logger.Fatal(srv.ListenAndServe())
 }
