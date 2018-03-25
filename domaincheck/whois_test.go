@@ -34,9 +34,9 @@ func Test_ParseDomain(t *testing.T) {
 	}
 }
 
-func Test_GetRawWhois(t *testing.T) {
+func Test_getRawWhois(t *testing.T) {
 	t.Parallel()
-	_, err := GetRawWhois("jaronrolfe.com", "whois.iana.org")
+	_, err := getRawWhois("jaronrolfe.com", "whois.iana.org")
 	if err != nil {
 		t.Fatalf("a bad")
 	}
@@ -52,7 +52,7 @@ func Test_GetWhois(t *testing.T) {
 }
 
 func Test_ParseReferServer(t *testing.T) {
-	result := ParseReferServer(fakewhoisdata)
+	result := parseReferServer(fakewhoisdata)
 	if result != "whois.verisign-grs.com" {
 		t.Fatalf("failed to extract whois referral")
 	}

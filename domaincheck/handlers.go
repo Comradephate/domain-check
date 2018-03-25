@@ -25,7 +25,6 @@ type DomainRequest struct {
 }
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	//log.Println("ok test")
 	fmt.Fprintf(w, "Hello!")
 }
 

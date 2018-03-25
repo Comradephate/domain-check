@@ -11,7 +11,7 @@ import (
 
 func main() {
 	dc := domaincheck.DomainCheck{}
-	r := dc.NewRouter
+	r := dc.MakeRouter()
 
 	srv := &http.Server{
 		Handler:      r,
