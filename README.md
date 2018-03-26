@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/Comradephate/domain-check/tree/master.svg?style=svg)](https://circleci.com/gh/Comradephate/domain-check/tree/master)
+[![CircleCI](https://circleci.com/gh/Comradephate/domain-check/tree/master.svg?style=svg)](https://circleci.com/gh/Comradephate/domain-check/tree/master) [![codecov](https://codecov.io/gh/Comradephate/domain-check/branch/master/graph/badge.svg)](https://codecov.io/gh/Comradephate/domain-check)
 
 # domain-check
 
