@@ -1,5 +1,5 @@
 env:
-  - BUILDKTE_GOLANG_IMPORT_PATH: "github.com/comradephate/domain-check"
+  - BUILDKTE_GOLANG_IMPORT_PATH="github.com/comradephate/domain-check"
 steps:
   - command: "go test .\\domaincheck\\"
   - command: "go test -race -coverprofile=coverage.txt -covermode=atomic"
