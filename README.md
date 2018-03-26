@@ -1,4 +1,4 @@
-[![Build status](https://badge.buildkite.com/d57a3a0fbe1914cd2833a0716d9af54d08daac8eb6e058f3f9.svg)](https://buildkite.com/jaron/domaincheck)
+[![CircleCI](https://circleci.com/gh/Comradephate/domain-check/tree/master.svg?style=svg)](https://circleci.com/gh/Comradephate/domain-check/tree/master)
 
 # domain-check
 
