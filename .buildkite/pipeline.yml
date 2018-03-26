@@ -1,6 +1,0 @@
-steps:
-  - command: "go test .\\domaincheck\\"
-    env: BUILDKTE_GOLANG_IMPORT_PATH: "github.com/comradephate/domain-check"
-  - command: "go test -race -coverprofile=coverage.txt -covermode=atomic"
-    env: BUILDKTE_GOLANG_IMPORT_PATH: "github.com/comradephate/domain-check"
-  - command: bash <(curl -s https://codecov.io/bash)
